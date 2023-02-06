@@ -1,8 +1,10 @@
+<mat-card>
+  <mat-toolbar color="primary">Cursos Disponíveis</mat-toolbar>
 <table mat-table [dataSource]="courses" class="mat-elevation-z8">
   <!-- Name Column -->
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> Curso </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    <td mat-cell *matCellDef="let couse"> {{couse.name}} </td>
   </ng-container>
 
   <!-- Category Column -->
@@ -18,4 +20,4 @@
   <!-- para cada registro encontrado mostra as colunas declaradas na variável de  displayedColumns -->
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
-
+</mat-card>
