@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { NonNullableFormBuilder } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { CoursesService } from './../../services/courses.service';
@@ -17,7 +17,7 @@ export class CourseFormComponent implements OnInit {
     category: ['']
   });
 
-  constructor(private formBuilder: NonNullableFormBuilder,
+  constructor(private formBuilder: FormBuilder,
     private service: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location) {
