@@ -47,7 +47,11 @@ courses$: Observable<Course[]>;
   }
 
   onAdd() {
-    this.router.navigate(['new'], {relativeTo: this.route})
+    this.router.navigate(['new'], {relativeTo: this.route});
+  }
+
+  onEdit(couse: Course) {
+    this.router.navigate(['edit', couse._id], {relativeTo: this.route});
   }
 
 
