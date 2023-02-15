@@ -2,9 +2,9 @@ package com.edilbert.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,15 +46,7 @@ public class CourseController {
     .orElse(ResponseEntity.notFound().build());
   }
 
-  // Utilizando o ResponseEntity
-  // @PostMapping
-  // public ResponseEntity<Course> create(@RequestBody Course course) {
-  //   return ResponseEntity.status(HttpStatus.CREATED)
-  //   .body(courseRepository.save(course));
-  // }
 
-
-  //Utilizando anotação do spring
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
   public Course create(@RequestBody @Valid Course course) {
