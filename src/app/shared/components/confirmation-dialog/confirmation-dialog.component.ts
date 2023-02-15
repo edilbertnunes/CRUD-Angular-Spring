@@ -14,7 +14,7 @@ export class ConfirmationDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+
   }
 
   onConfirm(result: boolean): void {
