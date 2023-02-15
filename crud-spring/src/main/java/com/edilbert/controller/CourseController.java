@@ -16,65 +16,56 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edilbert.model.Course;
 import com.edilbert.repository.CourseRepository;
-
-import lombok.AllArgsConstructor;
+import com.edilbert.service.CourseService;
 
 @Validated
 @RestController
 @RequestMapping("/api/courses")
-@AllArgsConstructor
 public class CourseController {
 
-  //@Autowired
-  private CourseRepository courseRepository;
+  private final CourseService courseService;
 
-  // @GetMapping e  @RequestMapping(method = RequestMethod.GET) são a mesma coisa
+  public CourseController(CourseService courseService) {
+    this.courseService = courseService;
+  }
+
   @GetMapping
-  public List<Course> list() {
-    return courseRepository.findAll();
+  public @ResponseBody List<Course> list() {
+    return courseService.list();
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Course> findById(@PathVariable @NotNull @Positive Long id){
-    return courseRepository.findById(id)
-    .map(recordFound -> ResponseEntity.ok().body(recordFound))
-    .orElse(ResponseEntity.notFound().build());
+  public ResponseEntity<Course> findById(@PathVariable @NotNull @Positive Long id) {
+    return courseService.findById(id)
+        .map(recordFound -> ResponseEntity.ok().body(recordFound))
+        .orElse(ResponseEntity.notFound().build());
   }
-
 
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
   public Course create(@RequestBody @Valid Course course) {
-    return courseRepository.save(course);
+    return courseService.create(course);
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Course>update(@PathVariable @NotNull @Positive Long id,
-  @RequestBody @Valid Course course) {
-    return courseRepository.findById(id)
-    .map(recordFound -> {
-      recordFound.setName(course.getName());
-      recordFound.setCategory(course.getCategory());
-      Course updated = courseRepository.save(recordFound);
-      return ResponseEntity.ok().body(updated);
-    })
-    .orElse(ResponseEntity.notFound().build());
-
+  public ResponseEntity<Course> update(@PathVariable @NotNull @Positive Long id,
+      @RequestBody @Valid Course course) {
+    return courseService.update(id, course)
+        .map(recordFound -> ResponseEntity.ok().body(recordFound))
+        .orElse(ResponseEntity.notFound().build());
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(@PathVariable @NotNull @Positive Long id) {
-    return courseRepository.findById(id)
-    .map(recordFound -> {
-      courseRepository.deleteById(id);
+    if(courseService.delete(id)) {
       return ResponseEntity.noContent().<Void>build();
-    })
-    .orElse(ResponseEntity.notFound().build());
+    }
+    return ResponseEntity.notFound().build();
   }
-
 }
