@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, MinLengthValidator, Validators } from '@angular/forms';
+import { UntypedFormBuilder, MinLengthValidator, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -22,7 +22,7 @@ export class CourseFormComponent implements OnInit {
     category: ['', [Validators.required]]
   });
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private service: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location,
