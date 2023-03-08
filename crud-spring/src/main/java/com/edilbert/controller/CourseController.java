@@ -60,4 +60,6 @@ public class CourseController {
   public void delete(@PathVariable @NotNull @Positive Long id) {
       courseService.delete(id);
   }
+
+  // Teste branch 43
 }
